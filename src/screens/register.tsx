@@ -6,6 +6,7 @@ import { Button } from '../components/Button/Index'
 import Icon from 'react-native-vector-icons/Feather'
 import { TopButton } from '../components/TopButton'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import Colors from '../constants/colors'
 
 
 interface RegisterData{
@@ -203,7 +204,7 @@ export default function RegisterScreen({ navigation }) {
       {isLoading && (
         <ActivityIndicator
           size="large" 
-          color="#0056FF" 
+          color={Colors.primaryBlue}
           style={styles.loader}
         />
       )}
@@ -215,7 +216,7 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#14181B',
+    backgroundColor: Colors.bgDark,
     padding: 44,
     justifyContent: 'flex-start',
   },
@@ -226,23 +227,23 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   subtitle: {
-    color: '#aaa',
+    color: Colors.subtitleText,
     fontSize: 20,
     marginBottom: 20,
   },
   footerText: {
-    color: '#ccc',
+    color: Colors.subtitleText,
     textAlign: 'center',
     marginTop: 16,
     fontSize: 20,
   },
   loginLink: {
-    color: '#0056FF',
+    color: Colors.primaryBlue,
     fontWeight: 'bold',
   },
   
   errorText: {
-    color: '#ff4444',
+    color: Colors.errorText,
     marginTop: -15,
     marginBottom: 15,
     fontSize: 14,

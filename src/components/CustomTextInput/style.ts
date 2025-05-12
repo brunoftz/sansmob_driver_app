@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import Colors from "../../constants/colors";
 
 export const s = StyleSheet.create({
     input: {
-        backgroundColor: '#1C2427',
+        backgroundColor: Colors.primaryDark,
         color: '#fff',
         padding: 15,
         paddingVertical: 20,
@@ -13,7 +14,7 @@ export const s = StyleSheet.create({
       passwordContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#1C2427',
+        backgroundColor: Colors.primaryDark,
         color: '#fff',
         borderRadius: 15,
         marginBottom: 20,

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Colors from "../../constants/colors";
 
 export const s = StyleSheet.create({
     button: {
@@ -8,12 +9,12 @@ export const s = StyleSheet.create({
       marginBottom: 25,
     },
     primaryButton: {
-      backgroundColor: '#0056FF',
+      backgroundColor: Colors.primaryBlue,
     },
     secondaryButton: {
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: '#0056FF',
+      borderColor: Colors.primaryBlue,
     },
     buttonText: {
       fontWeight: 'bold',
@@ -23,6 +24,6 @@ export const s = StyleSheet.create({
       color: '#fff',
     },
     secondaryText: {
-      color: '#0056FF',
+      color: Colors.primaryBlue,
     },
   }); 

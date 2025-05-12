@@ -4,18 +4,14 @@ import { TopButton } from '../components/TopButton';
 import { CardOption } from '../components/CardOption';
 import { Title } from '../components/Title';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../constants/colors';
 
-<CardOption
-  label="Dados pessoais"
-  locked
-  iconComponent={MaterialCommunityIcons}
-  iconName="lock-outline"
-/>
+
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <TopButton iconName="menu" style={styles.topButton}onPress={() => { /* open drawer or menu */ }} />
+      {/* <TopButton iconName="menu" style={styles.topButton}onPress={() => { /* open drawer or menu */ }} /> */}
       <Title>Olá, motorista!</Title>
       <Text style={styles.subtitle}>
         Preencha as etapas obrigatórias para trabalhar conosco.
@@ -23,18 +19,20 @@ export default function HomeScreen({ navigation }) {
       <CardOption
         label="Dados pessoais"
         iconComponent={MaterialCommunityIcons}
-        iconName="lock-open-outline"/>
+        iconName="lock-open-outline"
+        onPress={()=>{navigation.navigate('DataValidation')}}/>
 
 
       <CardOption
         label="Veículo"
-        locked
+        // locked
         iconComponent={MaterialCommunityIcons}
-        iconName="lock"/>
+        iconName="lock"
+        onPress={()=>{navigation.navigate('MapHome')}}/>
 
   
       <CardOption
-        label="Aceite de condições"
+        label="Termos e condições"
         locked
         iconComponent={MaterialCommunityIcons}
         iconName="lock"/>
@@ -46,12 +44,12 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#14181B',
+      backgroundColor: Colors.bgDark,
       padding: 44,
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
     },
     subtitle: {
-      color: '#aaa',
+      color: Colors.subtitleText,
       fontSize: 20,
       marginBottom: 20,
     },

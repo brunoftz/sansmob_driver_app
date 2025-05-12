@@ -2,6 +2,7 @@ import React from 'react';
 import { TextInput, TextInputProps, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { s } from './style';
+import Colors from '../../constants/colors';
 
 interface CustomTextInputProps extends TextInputProps {
   isPassword?: boolean;
@@ -32,7 +33,7 @@ export function CustomTextInput({
           <Icon
             name={showPassword ? 'eye' : 'eye-off'}
             size={28}
-            color="#aaa"
+            color={Colors.subtitleText}
           />
         </TouchableOpacity>
       </View>
@@ -41,7 +42,7 @@ export function CustomTextInput({
 
   return (
     <TextInput
-      placeholderTextColor="#aaa"
+      placeholderTextColor={Colors.subtitleText}
       style={[s.input, style]}
       {...props}
     />

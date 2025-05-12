@@ -10,6 +10,7 @@ import { CustomTextInput } from '../components/CustomTextInput';
 import { Title } from '../components/Title';
 import { Button } from '../components/Button/Index';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Colors from '../constants/colors';
 
 type RootStackParamList = {
   Login: undefined;
@@ -80,15 +81,15 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
 
     setIsLoading(true);
-    
+
     try {
       const loginData = prepareLoginData();
       // Aqui seria adicionada a chamada à api.
 
-      
+
       // Simulando delay, já que ainda não há lógica de autenticação
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Simulando login bem-sucedido
       navigation.navigate('Home');
     } catch (error) {
@@ -130,7 +131,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       />
       {errors.senha ? <Text style={styles.errorText}>{errors.senha}</Text> : null}
 
-      <Button 
+      <Button
         title={isLoading ? "Entrando..." : "Login"}
         onPress={handleLogin}
         disabled={isLoading}
@@ -144,11 +145,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
         </Text>
       </Text>
 
-      
+
       {isLoading && (
-        <ActivityIndicator 
-          size="large" 
-          color="#0056FF" 
+        <ActivityIndicator
+          size="large"
+          color={Colors.primaryBlue}
           style={styles.loader}
         />
       )}
@@ -159,27 +160,27 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#14181B',
+    backgroundColor: Colors.bgDark,
     padding: 44,
     justifyContent: 'center',
   },
   footerText: {
-    color: '#ccc',
+    color: Colors.subtitleText,
     textAlign: 'left',
     fontSize: 20
   },
   registerText: {
-    color: '#0056FF',
-    fontWeight:'bold',
+    color: Colors.primaryBlue,
+    fontWeight: 'bold',
   },
   errorText: {
-    color: '#ff4444',
+    color: Colors.errorText,
     marginTop: -15,
     marginBottom: 15,
     fontSize: 14,
   },
   loader: {
     marginTop: 15,
-    marginBottom:20
+    marginBottom: 20
   }
 });

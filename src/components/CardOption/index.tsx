@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { s } from './style';
@@ -9,6 +9,7 @@ interface CardOptionProps {
   onPress?: () => void;
   locked?: boolean;
   style?: ViewStyle;
+  labelStyle?: TextStyle;
   iconComponent?: React.ComponentType<any>;
   iconName?: string;
   iconColor?: string;
@@ -20,6 +21,7 @@ export function CardOption({
   onPress,
   locked = false,
   style,
+  labelStyle,
   iconComponent: IconComponent,
   iconName,
   iconColor = '#0056FF',
@@ -32,7 +34,7 @@ export function CardOption({
       activeOpacity={locked ? 1 : 0.7}
       disabled={locked}
     >
-      <Text style={s.label}>{label}</Text>
+      <Text style={[s.label, labelStyle]}>{label}</Text>
       {IconComponent && iconName && (
         <IconComponent name={iconName} size={iconSize} color={iconColor} />
       )}
