@@ -7,39 +7,52 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Colors from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons'; // ou use outro ícone
 import { Button } from '../components/Button/Index';
-
-
+import { ValidationAPI } from '../mock/validationData';
 
 // interface ConditionsData {}
 
-
-
 export default function ConditionsScreen({ navigation }) {
-
     const [isChecked, setIsChecked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({
+        terms: ''
+    });
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {
+            terms: ''
+        };
+
+        if (!isChecked) {
+            newErrors.terms = 'Você precisa aceitar os termos e condições';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const handleSubmit = async () => {
-        // if (!validateForm()) {
-        //   return;
-        // }
+        if (!validateForm()) {
+            return;
+        }
 
         setIsLoading(true);
 
         try {
-            //   const loginData = prepareLoginData();
-            // Aqui seria adicionada a chamada à api.
-
-
-            // Simulando delay, já que ainda não há lógica de autenticação
+            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Simulando login bem-sucedido
-            navigation.navigate('DataValidation');
+            
+            // Update validation status
+            await ValidationAPI.updateValidationStatus('conditions', true);
+            
+            // Navigate back
+            navigation.goBack();
         } catch (error) {
             Alert.alert(
                 'Erro',
-                'Não foi possível fazer login. Tente novamente.'
+                'Não foi possível enviar os dados. Tente novamente.'
             );
         } finally {
             setIsLoading(false);
@@ -74,6 +87,8 @@ export default function ConditionsScreen({ navigation }) {
                     Eu aceito todos os termos e condições
                 </Text>
             </TouchableOpacity>
+
+            {errors.terms ? <Text style={styles.errorText}>{errors.terms}</Text> : null}
 
             <Button
                 title={isLoading ? "Enviando..." : "Enviar"}
@@ -150,5 +165,10 @@ const styles = StyleSheet.create({
     loader: {
         marginTop: 15,
         marginBottom: 20
+    },
+    errorText: {
+        color: Colors.errorText,
+        marginBottom: 10,
+        marginLeft: 10
     }
 });

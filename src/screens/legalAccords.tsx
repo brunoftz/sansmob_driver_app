@@ -6,39 +6,52 @@ import { Title } from '../components/Title';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../constants/colors';
 import { Button } from '../components/Button/Index';
-
-
+import { ValidationAPI } from '../mock/validationData';
 
 //interface LegalAccordsData {}
 
-
-
 export default function LegalAccordsScreen({ navigation }) {
-
     const [criminalRecords, setCriminalRecords] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({
+        criminalRecords: ''
+    });
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {
+            criminalRecords: ''
+        };
+
+        if (!criminalRecords.trim()) {
+            newErrors.criminalRecords = 'É necessário anexar os antecedentes criminais';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const handleSubmit = async () => {
-        // if (!validateForm()) {
-        //   return;
-        // }
+        if (!validateForm()) {
+            return;
+        }
 
         setIsLoading(true);
 
         try {
-            //   const loginData = prepareLoginData();
-            // Aqui seria adicionada a chamada à api.
-
-
-            // Simulando delay, já que ainda não há lógica de autenticação
+            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Simulando login bem-sucedido
-            navigation.navigate('DataValidation');
+            
+            // Update validation status
+            await ValidationAPI.updateValidationStatus('legalAccords', true);
+            
+            // Navigate back
+            navigation.goBack();
         } catch (error) {
             Alert.alert(
                 'Erro',
-                'Não foi possível fazer login. Tente novamente.'
+                'Não foi possível enviar os dados. Tente novamente.'
             );
         } finally {
             setIsLoading(false);
@@ -69,11 +82,14 @@ export default function LegalAccordsScreen({ navigation }) {
                 iconSize={50}
                 style={styles.fileInput}
                 labelStyle={styles.InputText}
+                onPress={() => setCriminalRecords('uploaded')}
             />
+            {errors.criminalRecords ? <Text style={styles.errorText}>{errors.criminalRecords}</Text> : null}
             <Button
                 title={isLoading ? "Enviando..." : "Enviar"}
                 onPress={handleSubmit}
-                disabled={isLoading}></Button>
+                disabled={isLoading}
+            />
 
             {isLoading && (
                 <ActivityIndicator
@@ -103,6 +119,11 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 0,
         marginLeft: -20
+    },
+    errorText: {
+        color: Colors.errorText,
+        marginBottom: 10,
+        marginLeft: 10
     },
     fileInput: {
         textAlign: 'center',

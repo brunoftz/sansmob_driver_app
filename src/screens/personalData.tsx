@@ -7,56 +7,49 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Colors from '../constants/colors';
 import { Button } from '../components/Button/Index';
 import { CustomTextInput } from '../components/CustomTextInput';
-
-
+import { ValidationAPI } from '../mock/validationData';
 
 interface PersonalDataData {
     cnhProof: string;
 }
 
-
-
 export default function PersonalDataScreen({ navigation }) {
-    const [nome, setNome] = useState('')
-    const [cpf, setCpf] = useState('')
-    const [dataNasc, setDatanasc] = useState('')
-
-    const [cnhProof, setCnhProof] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [nome, setNome] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [dataNasc, setDataNasc] = useState('');
     const [errors, setErrors] = useState({
         nome: '',
         cpf: '',
-        dataNasc: '',
-    })
+        dataNasc: ''
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateForm = () => {
-        let isValid = true
+        let isValid = true;
         const newErrors = {
             nome: '',
             cpf: '',
-            dataNasc: '',
+            dataNasc: ''
+        };
+
+        if (!nome.trim()) {
+            newErrors.nome = 'Nome é obrigatório';
+            isValid = false;
         }
 
-
-        if (!nome) {
-            newErrors.nome = 'Nome é obrigatório'
-            isValid = false
+        if (!cpf.trim()) {
+            newErrors.cpf = 'CPF é obrigatório';
+            isValid = false;
         }
 
-        if (!cpf) {
-            newErrors.cpf = 'CPF é obrigatório'
-            isValid = false
+        if (!dataNasc.trim()) {
+            newErrors.dataNasc = 'Data de nascimento é obrigatória';
+            isValid = false;
         }
 
-        if (!dataNasc) {
-            newErrors.dataNasc = 'Data de nascimento é obrigatória'
-            isValid = false
-        }
-
-        setErrors(newErrors)
-        return isValid
-    }
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const handleSubmit = async () => {
         if (!validateForm()) {
@@ -66,19 +59,18 @@ export default function PersonalDataScreen({ navigation }) {
         setIsLoading(true);
 
         try {
-            //   const loginData = prepareLoginData();
-            // Aqui seria adicionada a chamada à api.
-
-
-            // Simulando delay, já que ainda não há lógica de autenticação
+            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Simulando login bem-sucedido
-            navigation.navigate('DataValidation');
+            
+            // Update validation status
+            await ValidationAPI.updateValidationStatus('personalData', true);
+            
+            // Navigate back
+            navigation.goBack();
         } catch (error) {
             Alert.alert(
                 'Erro',
-                'Não foi possível salvar os dados. Tente novamente.'
+                'Não foi possível enviar os dados. Tente novamente.'
             );
         } finally {
             setIsLoading(false);
@@ -87,20 +79,17 @@ export default function PersonalDataScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.goBack() /* open drawer or menu */ }} />
+            <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.goBack() }} />
             <Title>Preencha suas informações pessoais</Title>
-            {/* <Text style={styles.subtitle}></Text> */}
-
 
             <CustomTextInput
-                placeholder="[name]"
+                placeholder="Nome"
                 value={nome}
                 onChangeText={(text) => {
                     setNome(text);
                     setErrors(prev => ({ ...prev, nome: '' }));
                 }}
             />
-
             {errors.nome ? <Text style={styles.errorText}>{errors.nome}</Text> : null}
 
             <CustomTextInput
@@ -111,19 +100,17 @@ export default function PersonalDataScreen({ navigation }) {
                     setErrors(prev => ({ ...prev, cpf: '' }));
                 }}
             />
-            /{errors.cpf ? <Text style={styles.errorText}>{errors.cpf}</Text> : null}
+            {errors.cpf ? <Text style={styles.errorText}>{errors.cpf}</Text> : null}
 
             <CustomTextInput
                 placeholder="Data de nascimento"
                 value={dataNasc}
                 onChangeText={(text) => {
-                    setDatanasc(text);
+                    setDataNasc(text);
                     setErrors(prev => ({ ...prev, dataNasc: '' }));
                 }}
             />
             {errors.dataNasc ? <Text style={styles.errorText}>{errors.dataNasc}</Text> : null}
-
-
 
             <CardOption
                 label="Foto frente e verso da CNH"
@@ -138,19 +125,12 @@ export default function PersonalDataScreen({ navigation }) {
                 style={styles.fileInput}
                 labelStyle={styles.InputText}
             />
+
             <Button
                 title={isLoading ? "Enviando..." : "Enviar"}
                 onPress={handleSubmit}
-                disabled={isLoading}></Button>
-
-            {isLoading && (
-                <ActivityIndicator
-                    size="large"
-                    color={Colors.primaryBlue}
-                    style={styles.loader}
-                />
-            )}
-
+                disabled={isLoading}
+            />
         </View>
     );
 }
@@ -172,24 +152,15 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         marginLeft: -20
     },
-    fileInput: {
-        textAlign: 'center',
-        flexDirection: 'column',
-    },
-    InputText: {
-        color: Colors.subtitleText,
-        fontWeight: 'regular',
-    },
-
     errorText: {
         color: Colors.errorText,
-        marginTop: -15,
-        marginBottom: 15,
-        fontSize: 14,
+        marginBottom: 10,
+        marginLeft: 10
     },
-
-    loader: {
-        marginTop: 15,
-        marginBottom: 20
+    fileInput: {
+        marginVertical: 10
+    },
+    InputText: {
+        fontSize: 16
     }
 });

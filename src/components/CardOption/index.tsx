@@ -16,8 +16,8 @@ interface CardOptionProps {
   iconSize?: number;
   iconPosition?: 'left' | 'right';
   cornerIcon?: string;
-  cornerIconColor?: string
-  boldLabel?: string
+  cornerIconColor?: string;
+  boldLabel?: string;
 }
 
 export function CardOption({
@@ -46,11 +46,13 @@ export function CardOption({
         <IconComponent name={iconName} style={s.iconStyle} size={iconSize} color={iconColor} />
       )}
       <Text style={[s.label, labelStyle]}>{label}</Text>
-      <Text style={[s.label, labelStyle]}>{boldLabel}</Text>
+      {boldLabel && <Text style={[s.boldLabel, labelStyle]}>{boldLabel}</Text>}
       {iconPosition === 'right' && IconComponent && iconName && (
         <IconComponent name={iconName} style={s.iconStyle} size={iconSize} color={iconColor} />
       )}
-      <IconComponent name={cornerIcon}size={30} color={cornerIconColor} style={s.cornerIcon}/>
+      {cornerIcon && IconComponent && (
+        <IconComponent name={cornerIcon} size={30} color={cornerIconColor} style={s.cornerIcon}/>
+      )}
     </TouchableOpacity>
   );
 }

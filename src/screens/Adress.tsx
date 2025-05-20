@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TopButton } from '../components/TopButton';
 import { CardOption } from '../components/CardOption';
 import { Title } from '../components/Title';
@@ -7,55 +7,53 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Colors from '../constants/colors';
 import { Button } from '../components/Button/Index';
 import { CustomTextInput } from '../components/CustomTextInput';
-
-
-
-interface AdressData {
-    adressProof: string;
-}
-
-
+import { ValidationAPI } from '../mock/validationData';
 
 export default function AdressScreen({ navigation }) {
-    const [cep, setCep] = useState('')
-    const [cidade, setCidade] = useState('')
-    const [estado, setEstado] = useState('')
-
-    const [adressProof, setAdressProof] = useState('');
+    const [cep, setCep] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
+    const [addressProof, setAddressProof] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({
         cep: '',
         cidade: '',
         estado: '',
-    })
+        addressProof: ''
+    });
 
     const validateForm = () => {
-        let isValid = true
+        let isValid = true;
         const newErrors = {
             cep: '',
             cidade: '',
             estado: '',
+            addressProof: ''
+        };
+
+        if (!cep.trim()) {
+            newErrors.cep = 'CEP é obrigatório';
+            isValid = false;
         }
 
-
-        if (!cep) {
-            newErrors.cep = 'Cep é obrigatório'
-            isValid = false
+        if (!cidade.trim()) {
+            newErrors.cidade = 'Cidade é obrigatória';
+            isValid = false;
         }
 
-        if (!cidade) {
-            newErrors.cidade = 'Cidade é obrigatório'
-            isValid = false
+        if (!estado.trim()) {
+            newErrors.estado = 'Estado é obrigatório';
+            isValid = false;
         }
 
-        if (!estado) {
-            newErrors.estado = 'Estado é obrigatório'
-            isValid = false
+        if (!addressProof.trim()) {
+            newErrors.addressProof = 'É necessário anexar o comprovante de endereço';
+            isValid = false;
         }
 
-        setErrors(newErrors)
-        return isValid
-    }
+        setErrors(newErrors);
+        return isValid;
+    };
 
     const handleSubmit = async () => {
         if (!validateForm()) {
@@ -65,19 +63,18 @@ export default function AdressScreen({ navigation }) {
         setIsLoading(true);
 
         try {
-            //   const loginData = prepareLoginData();
-            // Aqui seria adicionada a chamada à api.
-
-
-            // Simulando delay, já que ainda não há lógica de autenticação
+            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Simulando login bem-sucedido
-            navigation.navigate('DataValidation');
+            
+            // Update validation status
+            await ValidationAPI.updateValidationStatus('address', true);
+            
+            // Navigate back
+            navigation.goBack();
         } catch (error) {
             Alert.alert(
                 'Erro',
-                'Não foi possível salvar o endereço. Tente novamente.'
+                'Não foi possível enviar os dados. Tente novamente.'
             );
         } finally {
             setIsLoading(false);
@@ -86,25 +83,21 @@ export default function AdressScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.goBack() /* open drawer or menu */ }} />
+            <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.goBack() }} />
             <Title>Endereço</Title>
-            <Text style={styles.subtitle}>Informe o endereço onde deseja atuar
-            </Text>
-
+            <Text style={styles.subtitle}>Informe o endereço onde deseja atuar</Text>
 
             <CustomTextInput
-                placeholder="Cep"
+                placeholder="CEP"
                 value={cep}
                 onChangeText={(text) => {
                     setCep(text);
-                    setErrors(prev => ({ ...prev, Cep: '' }));
+                    setErrors(prev => ({ ...prev, cep: '' }));
                 }}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                keyboardType="numeric"
             />
-
             {errors.cep ? <Text style={styles.errorText}>{errors.cep}</Text> : null}
-            
+
             <CustomTextInput
                 placeholder="Cidade"
                 value={cidade}
@@ -114,7 +107,7 @@ export default function AdressScreen({ navigation }) {
                 }}
             />
             {errors.cidade ? <Text style={styles.errorText}>{errors.cidade}</Text> : null}
-            
+
             <CustomTextInput
                 placeholder="Estado"
                 value={estado}
@@ -123,33 +116,26 @@ export default function AdressScreen({ navigation }) {
                     setErrors(prev => ({ ...prev, estado: '' }));
                 }}
             />
-            {errors.cidade ? <Text style={styles.errorText}>{errors.cidade}</Text> : null}
-            
-
+            {errors.estado ? <Text style={styles.errorText}>{errors.estado}</Text> : null}
 
             <CardOption
                 label="Comprovantes de endereço"
                 iconSize={50}
                 style={styles.fileInput}
                 labelStyle={styles.InputText}
+                onPress={() => setAddressProof('uploaded')}
             />
+            {errors.addressProof ? <Text style={styles.errorText}>{errors.addressProof}</Text> : null}
+
             <Button
                 title={isLoading ? "Enviando..." : "Enviar"}
                 onPress={handleSubmit}
-                disabled={isLoading}></Button>
-
-            {isLoading && (
-                <ActivityIndicator
-                    size="large"
-                    color={Colors.primaryBlue}
-                    style={styles.loader}
-                />
-            )}
-
+                disabled={isLoading}
+            />
         </View>
     );
 }
- 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -167,24 +153,15 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         marginLeft: -20
     },
-    fileInput: {
-        textAlign: 'center',
-        flexDirection: 'column',
-    },
-    InputText: {
-        color: Colors.subtitleText,
-        fontWeight: 'regular',
-    },
-
     errorText: {
         color: Colors.errorText,
-        marginTop: -15,
-        marginBottom: 15,
-        fontSize: 14,
+        marginBottom: 10,
+        marginLeft: 10
     },
-
-    loader: {
-        marginTop: 15,
-        marginBottom: 20
+    fileInput: {
+        marginVertical: 10
+    },
+    InputText: {
+        fontSize: 16
     }
 });

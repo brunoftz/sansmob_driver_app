@@ -19,6 +19,7 @@ import LanguagesScreen from '../screens/profile/Languages';
 import CityScreen from '../screens/profile/City';
 import WalletScreen from '../screens/wallet/Wallet';
 import PaymentDataScreen from '../screens/wallet/PaymentData';
+import RegistrationUnderAnalysisScreen from '../screens/RegistrationUnderAnalysisScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -63,6 +64,7 @@ export function Routes() {
 
         <Stack.Screen name="Wallet" component={WalletScreen}/>
         <Stack.Screen name="PaymentData" component={PaymentDataScreen}/>
+        <Stack.Screen name="RegistrationUnderAnalysis" component={RegistrationUnderAnalysisScreen}/>
 
 
       </Stack.Navigator>
