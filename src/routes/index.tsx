@@ -16,6 +16,8 @@ import DriverMenuScreen from '../screens/DriverMenu';
 import TravelSuccessScreen from '../screens/TravelSuccess';
 import UserProfileScreen from '../screens/profile/UserProfile';
 import LanguagesScreen from '../screens/profile/Languages';
+import CityScreen from '../screens/profile/City';
+import WalletScreen from '../screens/wallet/Wallet';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,15 +25,14 @@ export function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='UserProfile'
+        initialRouteName='Login'
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: Colors.bgDark }
         }}
       >
-
-        <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-        <Stack.Screen name="Languages" component={LanguagesScreen} />
+        
+        {/* data validation screens */}
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
@@ -40,20 +41,26 @@ export function Routes() {
         <Stack.Screen name="Conditions" component={ConditionsScreen} />
         <Stack.Screen name="Adress" component={AdressScreen} />
         <Stack.Screen name="PersonalData" component={PersonalDataScreen} />
+
+
+        {/* map screens */}
         <Stack.Screen name="MapHome" component={MapHomeScreen} />
         <Stack.Screen name="DriverMenu" component={DriverMenuScreen}
           options={{
-            presentation: 'transparentModal', // deixa o fundo visível se quiser
-            animation: 'slide_from_left', // or 'slide_from_right', 'fade', etc.
-            // animação da esquerda
             headerShown: false,
             gestureEnabled: true,
           }} />
 
+        {/* Profile screens */}
+        <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+        <Stack.Screen name="Languages" component={LanguagesScreen} />
+        <Stack.Screen name="City" component={CityScreen} />
         <Stack.Screen name="TravelSuccess" component={TravelSuccessScreen}
           options={{
             animation: 'fade', // isso já aplica uma transição de opacidade
           }} />
+
+        <Stack.Screen name="Wallet" component={WalletScreen}/>
 
 
       </Stack.Navigator>

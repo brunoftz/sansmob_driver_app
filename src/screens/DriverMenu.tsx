@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TopButton } from '../components/TopButton';
-import { CardOption } from '../components/CardOption';
 import { Title } from '../components/Title';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../constants/colors';
+import { CardOption } from '../components/CardOption';
 
 
 
@@ -14,19 +14,22 @@ export default function DriverMenuScreen({ navigation }) {
       <TopButton iconName="menu" style={styles.topButton}onPress={() => { /* open drawer or menu */ }} />
       <CardOption
         style={styles.cards}
+        iconComponent={MaterialCommunityIcons}
         label="Home"
         onPress={()=>{navigation.navigate('DataValidation')}}/>
 
 
       <CardOption
         style={styles.cards}
+        iconComponent={MaterialCommunityIcons}
         label="Carteira"
-        onPress={()=>{navigation.navigate('MapHome')}}>
+        onPress={()=>{navigation.navigate('Wallet')}}>
         </CardOption>
 
   
       <CardOption
         style={styles.cards}
+        iconComponent={MaterialCommunityIcons}
         label="Perfil"
         onPress={()=>{navigation.navigate('UserProfile')}}/>
 

@@ -10,9 +10,10 @@ import { LanguageAPI } from "../../mock/languageData";
 import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native"; // 👈 Para detectar quando voltar do "Languages"
 
-export default function UserProfileScreen({ navigation }) {
+export default function UserProfileScreen({ navigation, route }) {
   const [languages, setLanguages] = useState<string[]>([]);
   const isFocused = useIsFocused(); // 👈 detecta quando a tela fica visível novamente
+  const city = route.params?.city || "Não especificada"; // Usa um valor padrão
 
   useEffect(() => {
     const fetchLanguages = async () => {
@@ -65,7 +66,7 @@ export default function UserProfileScreen({ navigation }) {
       />
 
       <CardOption
-        label="De Rio de Janeiro"
+        label={`De ${city}`}
         iconComponent={MaterialCommunityIcons}
         iconName="map-marker"
         iconSize={40}
@@ -74,6 +75,7 @@ export default function UserProfileScreen({ navigation }) {
         style={styles.cardEdit}
         cornerIcon="pencil-outline"
         cornerIconColor="white"
+        onPress={() => navigation.navigate("City")}
       />
     </View>
   );
@@ -100,6 +102,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 10,
     color: Colors.white,
+  },
+  cityText: {
+    fontSize: 18,
+    color: Colors.white,
+    marginVertical: 10,
   },
   statsContainer: {
     flexDirection: 'row',

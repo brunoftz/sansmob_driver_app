@@ -7,6 +7,7 @@ import Colors from "../../constants/colors";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Title } from "../../components/Title";
 import { LanguageAPI } from "../../mock/languageData";
+import { Button } from "../../components/Button/Index";
 
 export default function LanguagesScreen({ navigation }: { navigation: any }) {
   const [portuguese, setPortuguese] = useState(false);
@@ -74,6 +75,13 @@ export default function LanguagesScreen({ navigation }: { navigation: any }) {
         cornerIcon={spanish ? 'radiobox-marked' : 'radiobox-blank'}
         cornerIconColor="white"
       />
+
+      <Button
+        title="Salvar"
+        onPress={handleBack}
+        style={styles.button}
+        
+      />
     </View>
   );
 }
@@ -94,4 +102,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     justifyContent: 'flex-start',
   },
+  button:{
+    position:'absolute',
+    width:'100%',
+    alignSelf:'center',
+    bottom:70,
+    paddingVertical:25
+  }
 });
