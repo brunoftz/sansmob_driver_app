@@ -7,16 +7,20 @@ export const s = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: 16,
-    marginBottom: 12,
+    fontSize: 18,
+    borderColor:Colors.primaryDark,
+    borderBottomWidth:3,
+    paddingBottom:18,
+    marginTop:200,
+    paddingHorizontal:44
   },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.primaryDark,
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    marginBottom: 12,
+    paddingVertical: 14,
+    paddingHorizontal:44,
+    borderColor:Colors.primaryDark,
+    borderBottomWidth:3,
     borderRadius: 8,
   },
   iconContainer: {
@@ -30,15 +34,15 @@ export const s = StyleSheet.create({
   value: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
   destination: {
-    color: '#aaa',
-    fontSize: 13,
+    fontSize: 16,
+    color: Colors.white,
   },
   date: {
     color: '#ccc',
-    fontSize: 12,
+    fontSize: 15,
     marginLeft: 8,
   },
 });

@@ -16,7 +16,20 @@ const DATA=[
         'value':'21,91',
         'destination':'Jd. Lucia Rossa',
         'date': '01/20/2025'
+    },
+    {
+        'id':3,
+        'value':'31,95',
+        'destination':'Jd. Ana Freire',
+        'date': '01/20/2025'
+    },
+    {
+        'id':4,
+        'value':'11,91',
+        'destination':'Jd. Lucia Bruno',
+        'date': '01/20/2025'
     }
+
 ]
 
 const Item = ({ value, destination, date}) =>(
@@ -29,7 +42,7 @@ const Item = ({ value, destination, date}) =>(
 
         <View style={s.infoContainer}>
             <Text style={s.value}>R${value}</Text>
-            <Text style={s.destination}>{destination}</Text>
+            <Text style={s.destination}>Destino: {destination}</Text>
         </View>
 
         <Text style={s.date}>{date}</Text>
@@ -46,7 +59,7 @@ export default function DriverHistory(){
 
             )} 
 
-            ListHeaderComponent={<Text style={s.header}>Extrato</Text>}
+            ListHeaderComponent={<Text style={s.header}>Extrato:</Text>}
             contenctContainerStyle={s.container}
             />
     )

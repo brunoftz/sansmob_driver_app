@@ -7,6 +7,6 @@ export const defaultStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.bgDark,
         padding: 44,
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-start'
     },    
 })

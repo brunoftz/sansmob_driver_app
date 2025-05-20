@@ -1,6 +1,6 @@
 // src/screens/profile/UserProfile.tsx
 
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { defaultStyle } from "../../constants/defaultStyles";
 import { TopButton } from "../../components/TopButton";
 import { CardOption } from "../../components/CardOption";
@@ -12,8 +12,9 @@ import DriverHistory from "../../components/DriverHistory";
 
 export default function WalletScreen({ navigation }) {
   return (
+    <View style={styles.OuterContainer}>
     <View style={defaultStyle.container}>
-      <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.goBack(); }} />
+      <TopButton iconName="chevron-left" style={styles.topButton} onPress={() => { navigation.navigate('DriverMenu'); }} />
       
       <View style={styles.header}>
       <View style={styles.topinfo}>
@@ -27,15 +28,17 @@ export default function WalletScreen({ navigation }) {
       </View>
       <View style={styles.profileContainer}>
         <View style={styles.statsContainer}>
-          <View style={styles.stat}>
+          
+        <TouchableOpacity onPress={() => { navigation.navigate('PaymentData'); }} style={styles.stat}>
           <MaterialCommunityIcons name='credit-card'  size={32} color={Colors.primaryBlue} />
-            <Text style={styles.statLabel}>Dados de pagamento</Text>
-          </View>
-          <View style={styles.stat}>
+          <Text style={styles.statLabel}>Dados de pagamento</Text>
+        </TouchableOpacity>
+          <TouchableOpacity onPress={() => { /* Add navigation for the second stat here */ }} style={styles.stat}>
           <MaterialCommunityIcons name='chart-timeline-variant-shimmer'  size={32} color={Colors.primaryBlue} />
             <Text style={styles.statLabel}>Dashboard financeiro</Text>
-          </View>
+          </TouchableOpacity>
         </View>
+      </View>
       </View>
       <DriverHistory></DriverHistory>
 
@@ -45,12 +48,15 @@ export default function WalletScreen({ navigation }) {
 
 const styles = StyleSheet.create({
 
+  OuterContainer:{
+      flex: 1,
+      
+  },
 
   topinfo:{
     flexDirection:'row',
     gap:10,
     marginTop:30,
-    marginBottom:20
   },
   header:{
     marginTop:30,
@@ -61,13 +67,12 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   topButton: {
-    marginTop: 30,
-    marginBottom: 0,
+    marginTop: 30, 
     marginLeft: -20,
   },
   profileContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    zIndex:10
   },
   profileImage: {
     width: 160,
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
     alignItems:'flex-start',
     width: '100%',
     marginVertical: 20,
-    gap:25
+    gap:25,
   },
   stat: {
     alignItems: 'center',
@@ -94,7 +99,6 @@ const styles = StyleSheet.create({
     width:150,
     height:150,
     justifyContent:'center',
-    marginBottom: 20,
     borderRadius: 30,
   },
   statValue: {
@@ -115,7 +119,6 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     alignItems: 'flex-start',
-    marginBottom: 20,
     gap:10
   },
   balanceText: {
