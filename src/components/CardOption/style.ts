@@ -15,8 +15,19 @@ export const s = StyleSheet.create({
     },
     label: {
       color: '#fff',
+      fontSize:22
+    },
+    boldLabel: {
+      color: '#fff',
       fontWeight: 'bold',
       fontSize:22
     },
+    iconStyle: {
+      marginRight:10,
+    },
+    cornerIcon:{
+      position:'absolute',
+      right:30
+    }
   });
   

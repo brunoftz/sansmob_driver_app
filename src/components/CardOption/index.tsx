@@ -14,6 +14,10 @@ interface CardOptionProps {
   iconName?: string;
   iconColor?: string;
   iconSize?: number;
+  iconPosition?: 'left' | 'right';
+  cornerIcon?: string;
+  cornerIconColor?: string
+  boldLabel?: string
 }
 
 export function CardOption({
@@ -26,6 +30,10 @@ export function CardOption({
   iconName,
   iconColor = '#0056FF',
   iconSize = 28,
+  iconPosition = 'right',
+  cornerIcon,
+  cornerIconColor,
+  boldLabel
 }: CardOptionProps) {
   return (
     <TouchableOpacity
@@ -34,10 +42,15 @@ export function CardOption({
       activeOpacity={locked ? 1 : 0.7}
       disabled={locked}
     >
-      <Text style={[s.label, labelStyle]}>{label}</Text>
-      {IconComponent && iconName && (
-        <IconComponent name={iconName} size={iconSize} color={iconColor} />
+      {iconPosition === 'left' && IconComponent && iconName && (
+        <IconComponent name={iconName} style={s.iconStyle} size={iconSize} color={iconColor} />
       )}
+      <Text style={[s.label, labelStyle]}>{label}</Text>
+      <Text style={[s.label, labelStyle]}>{boldLabel}</Text>
+      {iconPosition === 'right' && IconComponent && iconName && (
+        <IconComponent name={iconName} style={s.iconStyle} size={iconSize} color={iconColor} />
+      )}
+      <IconComponent name={cornerIcon}size={30} color={cornerIconColor} style={s.cornerIcon}/>
     </TouchableOpacity>
   );
 }

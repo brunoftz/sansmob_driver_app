@@ -1,13 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, TextStyle } from 'react-native';
 import { s } from './style';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
   variant?: 'primary' | 'secondary';
+  textStyle?: TextStyle;
 }
 
-export function Button({ title, variant = 'primary', style, ...props }: ButtonProps) {
+export function Button({ title, textStyle, variant = 'primary', style, ...props }: ButtonProps) {
   return (
     <TouchableOpacity 
       style={[
@@ -19,8 +20,10 @@ export function Button({ title, variant = 'primary', style, ...props }: ButtonPr
     >
       <Text style={[
         s.buttonText,
-        variant === 'primary' ? s.primaryText : s.secondaryText
-      ]}>
+        variant === 'primary' ? s.primaryText : s.secondaryText,
+        textStyle
+      ]}
+      {...props}>
         {title}
       </Text>
     </TouchableOpacity>
